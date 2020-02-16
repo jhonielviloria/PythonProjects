@@ -17,7 +17,6 @@ def playAgain():
 
 def guess():
     randomNumber = randint(0, 20)
-    print(randomNumber)
     while True:
         try:
             inp = int(input("Guess the number from 0 to 20: "))
