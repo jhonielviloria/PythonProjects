@@ -1,6 +1,8 @@
-import sys, pygame
+import pygame
+import game_functions as gf
 from settings import Settings
 from ship import Ship
+from pygame.sprite import Group
 
 def run_game():
     # Initialize game and create a screen object.
@@ -10,20 +12,18 @@ def run_game():
     pygame.display.set_caption("Alien Invasion")
 
     # make a chip object
-    ship = Ship(screen)
+    ship = Ship(my_settings, screen)
+
+    # make a group for bullets
+    bullets = Group()
 
     # main loop of the game
     while True:
-        for event in pygame.event.get():
-            # stop the program when window is terminated
-            if event.type == pygame.QUIT:
-                sys.exit()
+        gf.check_events(my_settings, screen, ship, bullets)
+        ship.update()
+        gf.update_bullets(bullets)
 
-        # change bg color for each loop
-        screen.fill(my_settings.bg_color)
-        ship.blitme()
+        gf.update_screen(my_settings, screen, ship, bullets)
 
-        # show next frame
-        pygame.display.flip()
 
 run_game()
